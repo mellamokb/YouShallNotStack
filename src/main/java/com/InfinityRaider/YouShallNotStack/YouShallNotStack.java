@@ -1,36 +1,28 @@
 package com.InfinityRaider.YouShallNotStack;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.fybertech.meddle.MeddleMod;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 
-@Mod(modid = YouShallNotStack.modId, name = YouShallNotStack.modId,version = "1.1")
+@MeddleMod(id=YouShallNotStack.modId, name=YouShallNotStack.modId, version="1.2", author="mellamokb")
 public class YouShallNotStack {
     public static final String modId = "YouShallNotStack";
     public static String[] rawData;
 
-    @Mod.Instance(modId)
     public static YouShallNotStack instance;
 
-    @Mod.EventHandler
-    public static void preInit(FMLPreInitializationEvent event) {
-        ConfigurationHandler.init(event);
-    }
-
-    @Mod.EventHandler
-    public static void init(FMLInitializationEvent event) {
-       //Nope
-    }
-
-    @Mod.EventHandler
-    public static void postInit(FMLPostInitializationEvent event) {
+    public void init()
+	{
+    	ConfigurationHandler.init();
+    	postInit();
+	}
+    
+    public static void postInit() {
         for (int i = 0; i < rawData.length; i++) {
             String data[] = IOHelper.getData(rawData[i]);
-            Item item = (Item) Item.itemRegistry.getObject(data[0]);
-            Block block = (Block) Block.blockRegistry.getObject(data[0]);
+            Item item = (Item) Item.itemRegistry.getObject(new ResourceLocation(data[0]));
+            Block block = (Block) Block.blockRegistry.getObject(new ResourceLocation(data[0]));
             int size = Integer.parseInt(data[1]) <= 0 ? 0 : Integer.parseInt(data[1]) >= 64 ? 64 : Integer.parseInt(data[1]);
             if (item != null) {
                 item.setMaxStackSize(size);

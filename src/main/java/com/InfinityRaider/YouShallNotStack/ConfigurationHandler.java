@@ -1,6 +1,7 @@
 package com.InfinityRaider.YouShallNotStack;
 
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.fybertech.meddle.Meddle;
+import net.fybertech.meddle.MeddleMod;
 
 import java.io.*;
 import java.util.Arrays;
@@ -8,8 +9,8 @@ import java.util.Arrays;
 public class ConfigurationHandler {
     private static String directory;
 
-    public static void init(FMLPreInitializationEvent event) {
-        directory = event.getModConfigurationDirectory().toString();
+    public static void init() {
+        directory = Meddle.getConfigDir().toString();
         loadConfiguration();
     }
 
